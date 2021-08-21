@@ -1,38 +1,36 @@
 package com.agenda.views;
 
-public class TelaPrincipalView extends  PadraoView{
+public class TelaEdicaoView extends PadraoView{
 
-    public TelaPrincipalView()
+    public TelaEdicaoView()
     {
-        setId(1);
-
+        setId(2);
     }
 
     @Override
     public void mostraTela(TelaCallback callback) {
+
         Callback = callback;
 
-        setCabecalho("PROJETO AGENDA");
+        setCabecalho("Editar Compromisso");
         montaCabecalho();
-
     }
 
     @Override
     public void manipulaInput(String Input) {
-        switch(Input)
+        switch (Input)
         {
             case "1":
                 exibeNoConsole("Digitou 1");
                 break;
             case "2":
                 exibeNoConsole("Digitou 2");
-                Callback.trocarTela(2);
+                Callback.trocarTela(1);
                 break;
             default:
                 exibeNoConsole("Comando Invalido");
                 break;
         }
+
     }
-
-
 }

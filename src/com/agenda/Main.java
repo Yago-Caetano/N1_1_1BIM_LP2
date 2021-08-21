@@ -2,6 +2,8 @@ package com.agenda;
 
 import com.agenda.models.AgendaModel;
 import com.agenda.views.PadraoView;
+import com.agenda.views.TelaCallback;
+import com.agenda.views.TelaEdicaoView;
 import com.agenda.views.TelaPrincipalView;
 
 import java.util.ArrayList;
@@ -18,9 +20,27 @@ public class Main {
 
     private static AgendaModel Agenda;
 
-
     private static List<PadraoView> Telas;
     private static int IndiceDeTelaSelecionado;
+
+
+    /*
+        Callback das telas
+     */
+    static TelaCallback cbTela = new TelaCallback() {
+        @Override
+        public void trocarTela(int idTela) {
+            for(int counter = 0; counter < Telas.size(); counter++)
+            {
+                if(Telas.get(counter).getId() == idTela)
+                {
+                        IndiceDeTelaSelecionado = counter;
+                        mostraTelaSelecionada();
+                }
+            }
+        }
+    };
+
 
     public static void gerenciarTelas()
     {
@@ -29,13 +49,16 @@ public class Main {
         Telas = new ArrayList<PadraoView>();
 
         Telas.add(new TelaPrincipalView());
+        Telas.add(new TelaEdicaoView());
 
-        Telas.get(0).mostraTela();
+        mostraTelaSelecionada();
 
-        while (true)
-        {
-            aguardaInput();
-        }
+    }
+
+    private static void mostraTelaSelecionada()
+    {
+        Telas.get(IndiceDeTelaSelecionado).mostraTela(cbTela);
+
     }
 
     private static void aguardaInput()
@@ -49,5 +72,10 @@ public class Main {
     public static void main(String[] args) {
 
         gerenciarTelas();
+
+        while (true)
+        {
+            aguardaInput();
+        }
     }
 }

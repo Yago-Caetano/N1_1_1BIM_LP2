@@ -3,8 +3,8 @@ package com.agenda.views;
 public abstract class PadraoView {
 
     private String Cabecalho;
-
     private int Id;
+    protected TelaCallback Callback;
 
     public int getId() {
         return Id;
@@ -23,7 +23,12 @@ public abstract class PadraoView {
         System.out.println(String.format("######################## %s ###########################",Cabecalho));
     }
 
-    public abstract void mostraTela();
+    protected void exibeNoConsole(String texto)
+    {
+        System.out.println(texto);
+    }
+
+    public abstract void mostraTela(TelaCallback callback);
 
     public abstract void manipulaInput(String Input);
 }
