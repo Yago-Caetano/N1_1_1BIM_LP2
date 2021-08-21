@@ -12,6 +12,8 @@ public class CompromissoModel {
 
         private Date DataAviso;
 
+        private int Id;
+
         public CompromissoModel() {
         }
 
@@ -45,5 +47,13 @@ public class CompromissoModel {
 
         public void setDataAviso(Date dataAviso) {
                 DataAviso = dataAviso;
+        }
+
+        public int getId() {
+                return Id;
+        }
+
+        public void setId(int id) {
+                Id = id;
         }
 }
