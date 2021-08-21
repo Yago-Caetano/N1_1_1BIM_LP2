@@ -4,6 +4,16 @@ public abstract class PadraoView {
 
     private String Cabecalho;
 
+    private int Id;
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
     public void setCabecalho(String cabecalho) {
         Cabecalho = cabecalho;
     }
