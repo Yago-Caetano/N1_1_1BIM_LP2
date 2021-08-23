@@ -1,10 +1,7 @@
 package com.agenda;
 
 import com.agenda.models.AgendaModel;
-import com.agenda.views.PadraoView;
-import com.agenda.views.TelaCallback;
-import com.agenda.views.TelaEdicaoView;
-import com.agenda.views.TelaPrincipalView;
+import com.agenda.views.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +46,7 @@ public class Main {
         Telas = new ArrayList<PadraoView>();
 
         Telas.add(new TelaPrincipalView());
+        Telas.add(new TelaCadastroView());
         Telas.add(new TelaEdicaoView());
 
         mostraTelaSelecionada();

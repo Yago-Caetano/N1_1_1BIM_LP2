@@ -1,5 +1,7 @@
 package com.agenda.models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,7 +12,7 @@ public class CompromissoModel {
 
         private String Descricao;
 
-        private Date DataAviso;
+        private Calendar DataAviso;
 
         private int Id;
 
@@ -41,16 +43,29 @@ public class CompromissoModel {
                 Descricao = descricao;
         }
 
-        public Date getDataAviso() {
+        public Calendar getDataAviso() {
                 return DataAviso;
         }
 
-        public void setDataAviso(Date dataAviso) {
+        public void setDataAviso(Calendar dataAviso) {
                 DataAviso = dataAviso;
         }
 
         public int getId() {
                 return Id;
+        }
+
+        public String PrintCompromisso()
+        {
+                DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String result="";
+                result="Id: " + String.valueOf(Id) + "\n";
+                result=result+"Título: " + Titulo + "\n";
+                result=result+"Data: " + sdf.format(Data.getTime()) + "\n";
+                result=result+"Descrição: " + Descricao + "\n";
+                result=result+"Data: " + sdf.format(DataAviso.getTime()) + "\n";
+
+                return result;
         }
 
         public void setId(int id) {
