@@ -1,6 +1,7 @@
 package com.agenda;
 
 import com.agenda.models.AgendaModel;
+import com.agenda.models.CompromissoModel;
 import com.agenda.views.*;
 
 import java.util.ArrayList;
@@ -36,13 +37,21 @@ public class Main {
                 }
             }
         }
+
+        @Override
+        public void InsertCompromisso(CompromissoModel comp) {
+            Agenda.cadastrarCompromisso((comp));
+            System.out.println("foiiiiii");
+            trocarTela(0);
+
+        }
     };
 
 
     public static void gerenciarTelas()
     {
         IndiceDeTelaSelecionado = 0;
-
+        Agenda= new AgendaModel();
         Telas = new ArrayList<PadraoView>();
 
         Telas.add(new TelaPrincipalView());

@@ -17,6 +17,7 @@ public class TelaCadastroView extends  PadraoView{
     private byte menu;
 
 
+
     private CompromissoModel Compromisso ;
 
     private byte CADASTRAR_TITULO=0;
@@ -32,7 +33,7 @@ public class TelaCadastroView extends  PadraoView{
 
     @Override
     public void mostraTela(TelaCallback callback) {
-
+        Callback = callback;
         setCabecalho("CADASTRAR COMPROMISSO");
         Compromisso= new CompromissoModel();
         montaCabecalho();
@@ -47,7 +48,7 @@ public class TelaCadastroView extends  PadraoView{
     public void manipulaInput(String Input)  {
 
         if (Input=="0")
-            ;
+            Callback.trocarTela(0);
         else
         {
             if (menu==CADASTRAR_TITULO)
@@ -109,7 +110,7 @@ public class TelaCadastroView extends  PadraoView{
     void GetDescricao(String Input)
     {
         Compromisso.setDescricao(Input);
-        exibeNoConsole("Digite a data de aviso no formato dd/MM/yyyy");
+        exibeNoConsole("Digite a data de aviso de aviso no formato dd/MM/yyyy");
         menu=CADASTRAR_DATA_AVISO;
     }
     void GetDataAviso(String Input)
@@ -130,14 +131,32 @@ public class TelaCadastroView extends  PadraoView{
             Date date = sdfDate.parse(data);
             cal.setTime(date);
             Compromisso.setDataAviso(cal);
-            exibeNoConsole(Compromisso.PrintCompromisso());
-            exibeNoConsole("Compromisso Criado!");
+            ValidaDataAviso();
         }
         catch ( ParseException ex)
         {
             exibeNoConsole("Data inválida!");
-            exibeNoConsole("Digite a data no formato dd/MM/yyyy");
+            exibeNoConsole("Digite a data de aviso de aviso no formato dd/MM/yyyy");
             menu=CADASTRAR_DATA_AVISO;
         }
+    }
+    void ValidaDataAviso()
+    {
+        exibeNoConsole(String.valueOf(Compromisso.getData().compareTo(Compromisso.getDataAviso())));
+        if (Compromisso.getData().compareTo(Compromisso.getDataAviso())==1)
+            Finalizacao();
+        else
+        {
+            exibeNoConsole("a data de aviso deve ser menor que a data do compromisso");
+            exibeNoConsole("Digite a data de aviso de aviso no formato dd/MM/yyyy");
+            menu=CADASTRAR_DATA_AVISO;
+        }
+    }
+
+    void Finalizacao()
+    {
+        exibeNoConsole(Compromisso.PrintCompromisso());
+        exibeNoConsole("Compromisso Criado!");
+        Callback.InsertCompromisso(Compromisso);
     }
 }

@@ -1,5 +1,13 @@
 package com.agenda.models;
 
+
+import jdk.nashorn.internal.ir.debug.JSONWriter;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,11 +20,26 @@ public class AgendaModel {
     public final static int CONSULTA_ANTES_DA_DATA = 2;
     public final static int CONSULTA_DEPOIS_DA_DATA = 3;
 
+    private String Caminho="Agenda_Data.txt";
 
     List<CompromissoModel> Compromissos;
 
     public AgendaModel() {
-        Compromissos = new ArrayList<>(Compromissos);
+        Compromissos = new ArrayList<>();
+    }
+    private void write(final String s) {
+
+        try(FileWriter fw = new FileWriter(Caminho, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
+            out.println("the text");
+            //more code
+            out.println("more text");
+            //more code
+        } catch (IOException e) {
+            System.out.println("Erro ao escrever arquivo de dados");
+        }
     }
 
     public boolean cadastrarCompromisso(CompromissoModel compromisso)
@@ -24,6 +47,7 @@ public class AgendaModel {
         if(horarioLivre(compromisso.getData()))
         {
             Compromissos.add(compromisso);
+
             return true;
         }
         return false;

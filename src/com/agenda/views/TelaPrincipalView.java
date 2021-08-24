@@ -57,6 +57,7 @@ public class TelaPrincipalView extends  PadraoView{
     private void ExibeMenu()
     {
         exibeNoConsole("Digite 1 - > Cadastrar Compromisso");
+        exibeNoConsole("Digite 2 - > Visualizar Agenda");
     }
 
 
