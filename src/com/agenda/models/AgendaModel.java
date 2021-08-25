@@ -1,17 +1,10 @@
 package com.agenda.models;
 
 
-import jdk.nashorn.internal.ir.debug.JSONWriter;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class AgendaModel {
 
@@ -21,25 +14,138 @@ public class AgendaModel {
     public final static int CONSULTA_DEPOIS_DA_DATA = 3;
 
     private String Caminho="Agenda_Data.txt";
+    CompromissoModel compAux;
+
+    private int MaiorID;
 
     List<CompromissoModel> Compromissos;
 
     public AgendaModel() {
+        MaiorID=-1;
         Compromissos = new ArrayList<>();
+        FetchData();
     }
+
     private void write(final String s) {
 
         try(FileWriter fw = new FileWriter(Caminho, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
         {
-            out.println("the text");
-            //more code
-            out.println("more text");
+            out.println(s);
             //more code
         } catch (IOException e) {
             System.out.println("Erro ao escrever arquivo de dados");
         }
+    }
+    private void FetchData()
+    {
+        int qt=0;
+        System.out.println("Analisando memória.....");
+        File file = new File(Caminho);
+        Scanner input = null;
+        try
+        {
+            input = new Scanner(file);
+        } catch (FileNotFoundException e)
+        {
+            System.out.println("Arquivo txt não encontrado");
+        }
+        while (input.hasNextLine())
+        {
+            String[] parts = input.nextLine().split("-");
+            if (parts.length==5)
+            {
+                if (ConvertStringToCompromisso(parts))
+                {
+                    if(compAux.getId()>MaiorID)
+                        MaiorID=compAux.getId();
+                    Compromissos.add(compAux);
+                    qt++;
+                    //System.out.println(Compromissos.get(Compromissos.size()-1).PrintCompromisso());
+                }
+
+            }
+        }
+        System.out.println(String.valueOf(qt) + " compromissos(s) recuperados");
+
+    }
+    public int SolicitarID()
+    {
+        return MaiorID+1;
+    }
+    private boolean ConvertStringToCompromisso (String[] data)
+    {
+        compAux= new CompromissoModel();
+        if (! GetIdFromStringCompromisso(data[0]))
+            return false;
+        if (! GetTituloFromStringCompromisso(data[1]))
+            return false;
+        if (! GetDescricaoFromStringCompromisso(data[2]))
+            return false;
+        if (! GetDataFromStringCompromisso(data[3]))
+            return false;
+        if (! GetDataAvisoFromStringCompromisso(data[4]))
+            return false;
+
+        return true;
+       
+    }
+    private boolean GetIdFromStringCompromisso(String s)
+    {
+        try
+        {
+            int number = Integer.parseInt(s);
+            compAux.setId(number);
+            return true;
+        }
+        catch (NumberFormatException ex){
+            return false;
+        }
+    }
+    private boolean GetTituloFromStringCompromisso(String s)
+    {
+        compAux.setTitulo(s);
+        return true;
+    }
+    private boolean GetDescricaoFromStringCompromisso(String s)
+    {
+        compAux.setDescricao(s);
+        return true;
+    }
+    private boolean GetDataFromStringCompromisso(String s)
+    {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        Date date = null;
+        try
+        {
+            date = sdfDate.parse(s);
+        }
+        catch (ParseException e)
+        {
+            return false;
+        }
+        cal.setTime(date);
+        compAux.setData(cal);
+        return true;
+    }
+    private boolean GetDataAvisoFromStringCompromisso(String s)
+    {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        Date date = null;
+        try
+        {
+            date = sdfDate.parse(s);
+        }
+        catch (ParseException e)
+        {
+            return false;
+        }
+        cal.setTime(date);
+        compAux.setDataAviso(cal);
+        return true;
     }
 
     public boolean cadastrarCompromisso(CompromissoModel compromisso)
@@ -47,7 +153,9 @@ public class AgendaModel {
         if(horarioLivre(compromisso.getData()))
         {
             Compromissos.add(compromisso);
-
+            if(compromisso.getId()>MaiorID)
+                MaiorID=compromisso.getId();
+            write(compromisso.SerializedObject());
             return true;
         }
         return false;

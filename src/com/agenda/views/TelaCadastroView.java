@@ -130,6 +130,7 @@ public class TelaCadastroView extends  PadraoView{
             exibeNoConsole(data);
             Date date = sdfDate.parse(data);
             cal.setTime(date);
+            Compromisso.setId(Callback.SolicitarID());
             Compromisso.setDataAviso(cal);
             ValidaDataAviso();
         }

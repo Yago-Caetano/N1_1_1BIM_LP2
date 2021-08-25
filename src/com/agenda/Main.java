@@ -15,6 +15,7 @@ public class Main {
     public static final int TELA_EDICAO_COMPROMISSO = 2;
     public static final int TELA_SELECIONAR_COMPROMISSO = 3;
     public static final int TELA_ALARME = 4;
+    public static final int TELA_AGENDA = 5;
 
     private static AgendaModel Agenda;
 
@@ -41,9 +42,19 @@ public class Main {
         @Override
         public void InsertCompromisso(CompromissoModel comp) {
             Agenda.cadastrarCompromisso((comp));
-            System.out.println("foiiiiii");
+            System.out.println(comp.SerializedObject());
             trocarTela(0);
 
+        }
+
+        @Override
+        public AgendaModel GetAgenda() {
+            return Agenda;
+        }
+
+        @Override
+        public int SolicitarID() {
+            return Agenda.SolicitarID();
         }
     };
 
@@ -56,6 +67,7 @@ public class Main {
 
         Telas.add(new TelaPrincipalView());
         Telas.add(new TelaCadastroView());
+        Telas.add(new TelaAgendaView());
         Telas.add(new TelaEdicaoView());
 
         mostraTelaSelecionada();

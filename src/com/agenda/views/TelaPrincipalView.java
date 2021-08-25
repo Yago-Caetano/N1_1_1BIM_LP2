@@ -45,7 +45,7 @@ public class TelaPrincipalView extends  PadraoView{
                 break;
             case "2":
                 exibeNoConsole("Digitou 2");
-                Callback.trocarTela(2);
+                Callback.trocarTela(5);
                 break;
             default:
                 exibeNoConsole(Input);

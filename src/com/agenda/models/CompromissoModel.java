@@ -1,5 +1,8 @@
 package com.agenda.models;
 
+
+
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -63,9 +66,22 @@ public class CompromissoModel {
                 result=result+"Título: " + Titulo + "\n";
                 result=result+"Data: " + sdf.format(Data.getTime()) + "\n";
                 result=result+"Descrição: " + Descricao + "\n";
-                result=result+"Data: " + sdf.format(DataAviso.getTime()) + "\n";
+                result=result+"Data de aviso: " + sdf.format(DataAviso.getTime()) + "\n";
 
                 return result;
+        }
+        public String SerializedObject()
+        {
+                SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String Resultado="";
+                Resultado=String.valueOf(Id)+"-";
+                Resultado=Resultado + Titulo+"-";
+                Resultado=Resultado + Descricao+"-";
+                Resultado=Resultado + format1.format(Data.getTime())+"-";
+                Resultado=Resultado + format1.format(DataAviso.getTime());
+
+                return Resultado;
+
         }
 
         public void setId(int id) {
