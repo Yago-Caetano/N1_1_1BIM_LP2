@@ -167,6 +167,7 @@ public class AgendaModel {
     {
         if(horarioLivre(compromisso.getData()))
         {
+            compromisso.PosLista=Compromissos.size();
             Compromissos.add(compromisso);
             if(compromisso.getId()>MaiorID)
                 MaiorID=compromisso.getId();
