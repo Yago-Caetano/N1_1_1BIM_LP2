@@ -50,6 +50,7 @@ public class AgendaModel {
         } catch (FileNotFoundException e)
         {
             System.out.println("Arquivo txt não encontrado");
+            return;
         }
         while (input.hasNextLine())
         {
@@ -163,7 +164,7 @@ public class AgendaModel {
 
     public List<CompromissoModel> recuperarCompromisos(Calendar DataReferencia,int Modo)
     {
-        List<CompromissoModel> ListaDeRetorno = new ArrayList<>(Compromissos);
+        List<CompromissoModel> ListaDeRetorno = new ArrayList<CompromissoModel>();
 
         for(CompromissoModel c : Compromissos)
         {
