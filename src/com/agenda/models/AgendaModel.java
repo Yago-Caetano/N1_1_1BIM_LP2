@@ -60,6 +60,8 @@ public class AgendaModel {
                 {
                     if(compAux.getId()>MaiorID)
                         MaiorID=compAux.getId();
+
+                    compAux.PosLista=qt;
                     Compromissos.add(compAux);
                     qt++;
                     //System.out.println(Compromissos.get(Compromissos.size()-1).PrintCompromisso());
@@ -148,6 +150,18 @@ public class AgendaModel {
         return true;
     }
 
+    public CompromissoModel GetCompromissoById(int id)
+    {
+        for(int counter = 0; counter < Compromissos.size(); counter++)
+        {
+            if(Compromissos.get(counter).getId() == id)
+            {
+                return Compromissos.get(counter);
+            }
+        }
+        return null;
+    }
+
     public boolean cadastrarCompromisso(CompromissoModel compromisso)
     {
         if(horarioLivre(compromisso.getData()))
@@ -198,17 +212,26 @@ public class AgendaModel {
         return ListaDeRetorno;
     }
 
-    public boolean removerCompromisso(int idReferencia)
+    public boolean removerCompromisso(CompromissoModel comp)
     {
-        for(int counter = 0; counter < Compromissos.size(); counter++)
+        String data="";
+        Compromissos.remove(comp.PosLista);
+
+        PrintWriter writer = null;
+        try
         {
-            if(Compromissos.get(counter).getId() == idReferencia)
-            {
-                Compromissos.remove(counter);
-                return true;
-            }
+            writer = new PrintWriter(Caminho);
+        } catch (FileNotFoundException e) {
+            return false;
         }
-        return false;
+        writer.print("");
+        writer.close();
+
+        for(int counter = 0; counter < Compromissos.size(); counter++)
+            data=data+ Compromissos.get(counter).SerializedObject()+"\n";
+
+        write(data);
+        return true;
     }
 
     private boolean horarioLivre(Calendar diaReferencia)

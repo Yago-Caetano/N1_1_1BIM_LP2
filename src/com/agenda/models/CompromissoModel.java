@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CompromissoModel {
+
+        public  int PosLista;
         private String Titulo;
 
         private Calendar Data;

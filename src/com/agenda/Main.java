@@ -16,6 +16,7 @@ public class Main {
     public static final int TELA_SELECIONAR_COMPROMISSO = 3;
     public static final int TELA_ALARME = 4;
     public static final int TELA_AGENDA = 5;
+    public static final int TELA_DELETAR = 6;
 
     private static AgendaModel Agenda;
 
@@ -41,7 +42,11 @@ public class Main {
 
         @Override
         public void InsertCompromisso(CompromissoModel comp) {
-            Agenda.cadastrarCompromisso((comp));
+            if(Agenda.cadastrarCompromisso((comp)))
+                System.out.println("Compromisso Criado!");
+            else
+                System.out.println("Erro ao cadastrar compromisso");
+
             System.out.println(comp.SerializedObject());
             trocarTela(0);
 
@@ -69,6 +74,7 @@ public class Main {
         Telas.add(new TelaCadastroView());
         Telas.add(new TelaAgendaView());
         Telas.add(new TelaEdicaoView());
+        Telas.add(new TelaDeletarView());
 
         mostraTelaSelecionada();
 
@@ -83,7 +89,7 @@ public class Main {
     private static void aguardaInput()
     {
         Scanner s = new Scanner(System.in);
-        String input = s.next();
+        String input = s.nextLine();
         Telas.get(IndiceDeTelaSelecionado).manipulaInput(input);
     }
 

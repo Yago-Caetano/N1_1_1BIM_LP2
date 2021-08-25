@@ -22,14 +22,9 @@ public class TelaCadastroView extends  PadraoView{
 
     private byte CADASTRAR_TITULO=0;
     private byte CADASTRAR_DATA=1;
-    private byte CADASTRAR_HORA=2;
+
     private byte CADASTRAR_DESCRICAO=3;
     private byte CADASTRAR_DATA_AVISO=4;
-    private byte CADASTRAR_HORA_AVISO=5;
-
-
-    private String DataString;
-    private String DataAvisoString;
 
     @Override
     public void mostraTela(TelaCallback callback) {
@@ -47,7 +42,7 @@ public class TelaCadastroView extends  PadraoView{
     @Override
     public void manipulaInput(String Input)  {
 
-        if (Input=="0")
+        if (Input.equals("0"))
             Callback.trocarTela(0);
         else
         {
@@ -55,18 +50,12 @@ public class TelaCadastroView extends  PadraoView{
                 GetTitulo(Input);
 
             else if (menu==CADASTRAR_DATA)
-                GetData(Input);
-
-            else if (menu==CADASTRAR_HORA)
                 GetDataTime(Input);
 
             else if (menu==CADASTRAR_DESCRICAO)
                 GetDescricao(Input);
 
             else if (menu==CADASTRAR_DATA_AVISO)
-                GetDataAviso(Input);
-
-            else if (menu==CADASTRAR_HORA_AVISO)
                 GetDataTimeAviso(Input);
 
 
@@ -76,18 +65,12 @@ public class TelaCadastroView extends  PadraoView{
     void GetTitulo(String Input)
     {
         Compromisso.setTitulo(Input);
-        exibeNoConsole("Digite a data no formato dd/MM/yyyy");
+        exibeNoConsole("Digite a data no formato dd/MM/yyyy HH:mm");
         menu=CADASTRAR_DATA;
-    }
-    void GetData(String Input)
-    {
-        DataString=Input;
-        exibeNoConsole("Digite a hora no formato HH:mm");
-        menu=CADASTRAR_HORA;
     }
     void GetDataTime(String Input)
     {
-        String data = DataString+ " " + Input;
+        String data = Input;
         Calendar cal = Calendar.getInstance();
 
         SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy hh:mm");
@@ -110,18 +93,12 @@ public class TelaCadastroView extends  PadraoView{
     void GetDescricao(String Input)
     {
         Compromisso.setDescricao(Input);
-        exibeNoConsole("Digite a data de aviso de aviso no formato dd/MM/yyyy");
+        exibeNoConsole("Digite a data de aviso de aviso no formato dd/MM/yyyy hh:mm");
         menu=CADASTRAR_DATA_AVISO;
-    }
-    void GetDataAviso(String Input)
-    {
-        DataAvisoString=Input;
-        exibeNoConsole("Digite a hora no formato HH:mm");
-        menu=CADASTRAR_HORA_AVISO;
     }
     void GetDataTimeAviso(String Input)
     {
-        String data = DataAvisoString+ " " + Input;
+        String data = Input;
         Calendar cal = Calendar.getInstance();
 
         SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy hh:mm");
@@ -157,7 +134,6 @@ public class TelaCadastroView extends  PadraoView{
     void Finalizacao()
     {
         exibeNoConsole(Compromisso.PrintCompromisso());
-        exibeNoConsole("Compromisso Criado!");
         Callback.InsertCompromisso(Compromisso);
     }
 }
