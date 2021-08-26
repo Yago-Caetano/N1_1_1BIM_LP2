@@ -247,4 +247,21 @@ public class AgendaModel {
         }
         return true;
     }
+
+    /**
+     *  Função utilizada para verificar se há alarmes no horário indicado
+     * @return id do compromisso com alarme atingido, caso não haja alarmes o valor -1 é retornado
+     */
+    public int verificaExistenciaAlarme(Calendar dataAtual)
+    {
+        for(int counter = 0; counter < Compromissos.size();counter++)
+        {
+            if(Compromissos.get(counter).executaAlarme(dataAtual))
+            {
+                Compromissos.get(counter).setAlarmeExecutado();
+                return counter;
+            }
+        }
+        return -1;
+    }
 }

@@ -4,7 +4,12 @@ import com.agenda.models.AgendaModel;
 import com.agenda.models.CompromissoModel;
 import com.agenda.views.*;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -93,11 +98,56 @@ public class Main {
         Telas.get(IndiceDeTelaSelecionado).manipulaInput(input);
     }
 
+    private static void reproduzirSirene(){
+
+        try {
+            //URL do som que no caso esta no pendrive, mais ainda é uma fase de teste.
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/resources/alarm.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY); //Para repetir o som.
+        } catch (Exception ex) {
+            System.out.println("Erro ao executar SOM!");
+            ex.printStackTrace();
+        }
+
+    }
+
+
+    private static void alarme()
+    {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true)
+                {
+                    try{
+                        Thread.sleep(1000);
+
+                        //verifica a ocorrencia de alarme
+                        int idCompromisso = Agenda.verificaExistenciaAlarme(Calendar.getInstance());
+                        if(idCompromisso>0)
+                        {
+                            CompromissoModel compromissoAux = Agenda.GetCompromissoById(idCompromisso);
+                            System.out.printf("Alarme %s !!\r\n",compromissoAux.getTitulo());
+                            reproduzirSirene();
+                        }
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
+                }
+            }
+        }).start();
+    }
+
 
     public static void main(String[] args) {
 
         gerenciarTelas();
-
+        alarme();
         while (true)
         {
             aguardaInput();

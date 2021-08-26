@@ -19,6 +19,8 @@ public class CompromissoModel {
 
         private Calendar DataAviso;
 
+        private boolean AlarmeTocou;
+
         private int Id;
 
         public CompromissoModel() {
@@ -88,5 +90,23 @@ public class CompromissoModel {
 
         public void setId(int id) {
                 Id = id;
+        }
+
+        public void setAlarmeExecutado()
+        {
+                AlarmeTocou = true;
+        }
+
+        public boolean getAlarmeExecutado()
+        {
+                return AlarmeTocou;
+        }
+
+        public boolean executaAlarme(Calendar c)
+        {
+                if((DataAviso.getTime().compareTo(c.getTime()) <= 0) && !AlarmeTocou)
+                        return true;
+                else
+                        return false;
         }
 }
