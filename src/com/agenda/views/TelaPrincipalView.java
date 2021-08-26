@@ -47,6 +47,9 @@ public class TelaPrincipalView extends  PadraoView{
                 Callback.trocarTela(5);
                 break;
             case "3":
+                Callback.trocarTela(2);
+                break;
+            case "4":
                 Callback.trocarTela(6);
                 break;
             default:
@@ -60,7 +63,8 @@ public class TelaPrincipalView extends  PadraoView{
     {
         exibeNoConsole("Digite 1 - > Cadastrar Compromisso");
         exibeNoConsole("Digite 2 - > Visualizar Agenda");
-        exibeNoConsole("Digite 3 - > Deletar Compromissos");
+        exibeNoConsole("Digite 3 - > Editar Compromissos");
+        exibeNoConsole("Digite 4 - > Deletar Compromissos");
     }
 
 

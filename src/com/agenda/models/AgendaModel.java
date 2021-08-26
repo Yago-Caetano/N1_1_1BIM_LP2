@@ -213,12 +213,9 @@ public class AgendaModel {
 
         return ListaDeRetorno;
     }
-
-    public boolean removerCompromisso(CompromissoModel comp)
+    private boolean AtualizarFile()
     {
         String data="";
-        Compromissos.remove(comp.PosLista);
-
         PrintWriter writer = null;
         try
         {
@@ -233,7 +230,19 @@ public class AgendaModel {
             data=data+ Compromissos.get(counter).SerializedObject()+"\n";
 
         write(data);
+
         return true;
+    }
+
+    public boolean removerCompromisso(CompromissoModel comp)
+    {
+        Compromissos.remove(comp.PosLista);
+        return AtualizarFile();
+    }
+    public boolean EditarCompromisso(CompromissoModel comp)
+    {
+        Compromissos.set(comp.PosLista,comp);
+        return AtualizarFile();
     }
 
     private boolean horarioLivre(Calendar diaReferencia)

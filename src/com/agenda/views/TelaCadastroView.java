@@ -73,7 +73,7 @@ public class TelaCadastroView extends  PadraoView{
         String data = Input;
         Calendar cal = Calendar.getInstance();
 
-        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         try
         {
             exibeNoConsole(data);
@@ -86,7 +86,7 @@ public class TelaCadastroView extends  PadraoView{
         catch ( ParseException ex)
         {
             exibeNoConsole("Data inválida!");
-            exibeNoConsole("Digite a data no formato dd/MM/yyyy");
+            exibeNoConsole("Digite a data no formato dd/MM/yyyy HH:mm");
             menu=CADASTRAR_DATA;
         }
     }

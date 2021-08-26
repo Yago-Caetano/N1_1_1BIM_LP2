@@ -51,18 +51,7 @@ public class TelaDeletarView extends  PadraoView {
         }
 
     }
-    private void DesistirContinuar(String input)
-    {
-        switch(input)
-        {
-            case "s":
-                _agenda.removerCompromisso(comp);
-            default:
-                ExibeMenu();
-                break;
-        }
 
-    }
     private void Confirmar_Delete(String input)
     {
         switch(input)
