@@ -1,5 +1,6 @@
 package com.agenda;
 
+import com.agenda.controllers.AlarmController;
 import com.agenda.models.AgendaModel;
 import com.agenda.models.CompromissoModel;
 import com.agenda.views.*;
@@ -27,6 +28,7 @@ public class Main {
 
     private static List<PadraoView> Telas;
     private static int IndiceDeTelaSelecionado;
+    private static AlarmController Alarme;
 
 
     /*
@@ -95,6 +97,9 @@ public class Main {
     {
         Scanner s = new Scanner(System.in);
         String input = s.nextLine();
+        if(Alarme.alarmeExecutando())
+            Alarme.stopAlarm();
+
         Telas.get(IndiceDeTelaSelecionado).manipulaInput(input);
     }
 
@@ -117,6 +122,8 @@ public class Main {
 
     private static void alarme()
     {
+        Alarme = new AlarmController();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -130,8 +137,7 @@ public class Main {
                         if(idCompromisso>0)
                         {
                             CompromissoModel compromissoAux = Agenda.GetCompromissoById(idCompromisso);
-                            System.out.printf("Alarme %s !!\r\n",compromissoAux.getTitulo());
-                            reproduzirSirene();
+                            Alarme.startAlarm(compromissoAux.getTitulo());
                         }
                     }
                     catch(Exception e)
