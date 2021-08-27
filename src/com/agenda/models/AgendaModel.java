@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static java.lang.Boolean.parseBoolean;
+
 public class AgendaModel {
 
     public final static int CONSULTA_MESMA_DATA = 0;
@@ -55,7 +57,7 @@ public class AgendaModel {
         while (input.hasNextLine())
         {
             String[] parts = input.nextLine().split("-");
-            if (parts.length==5)
+            if (parts.length==6)
             {
                 if (ConvertStringToCompromisso(parts))
                 {
@@ -90,6 +92,10 @@ public class AgendaModel {
             return false;
         if (! GetDataAvisoFromStringCompromisso(data[4]))
             return false;
+        if (! GetAlarmeFromStringCompromisso(data[5]))
+            return false;
+
+
 
         return true;
        
@@ -148,6 +154,11 @@ public class AgendaModel {
         }
         cal.setTime(date);
         compAux.setDataAviso(cal);
+        return true;
+    }
+    private boolean GetAlarmeFromStringCompromisso(String s)
+    {
+        compAux.AlarmeTocou=parseBoolean(s);
         return true;
     }
 
@@ -213,7 +224,7 @@ public class AgendaModel {
 
         return ListaDeRetorno;
     }
-    private boolean AtualizarFile()
+    public boolean AtualizarFile()
     {
         String data="";
         PrintWriter writer = null;

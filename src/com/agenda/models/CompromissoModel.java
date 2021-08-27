@@ -19,7 +19,7 @@ public class CompromissoModel {
 
         private Calendar DataAviso;
 
-        private boolean AlarmeTocou;
+        public boolean AlarmeTocou;
 
         private int Id;
 
@@ -82,7 +82,8 @@ public class CompromissoModel {
                 Resultado=Resultado + Titulo+"-";
                 Resultado=Resultado + Descricao+"-";
                 Resultado=Resultado + format1.format(Data.getTime())+"-";
-                Resultado=Resultado + format1.format(DataAviso.getTime());
+                Resultado=Resultado + format1.format(DataAviso.getTime())+"-";
+                Resultado=Resultado + String.valueOf(AlarmeTocou);
 
                 return Resultado;
 

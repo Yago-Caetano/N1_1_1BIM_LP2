@@ -99,7 +99,10 @@ public class Main {
         Scanner s = new Scanner(System.in);
         String input = s.nextLine();
         if(Alarme.alarmeExecutando())
+        {
             Alarme.stopAlarm();
+            Agenda.AtualizarFile();
+        }
 
         Telas.get(IndiceDeTelaSelecionado).manipulaInput(input);
     }
@@ -135,7 +138,7 @@ public class Main {
 
                         //verifica a ocorrencia de alarme
                         int idCompromisso = Agenda.verificaExistenciaAlarme(Calendar.getInstance());
-                        if(idCompromisso>0)
+                        if(idCompromisso>=0)
                         {
                             CompromissoModel compromissoAux = Agenda.GetCompromissoById(idCompromisso);
                             Alarme.startAlarm(compromissoAux.getTitulo());
