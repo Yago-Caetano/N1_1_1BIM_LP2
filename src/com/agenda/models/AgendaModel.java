@@ -208,13 +208,8 @@ public class AgendaModel {
 
             if(Modo == CONSULTA_MESMA_DATA)
             {
-               Calendar limiteSuperior = DataReferencia;
-               limiteSuperior.set(limiteSuperior.get(Calendar.YEAR),limiteSuperior.get(Calendar.MONTH),limiteSuperior.get(Calendar.DAY_OF_MONTH),limiteSuperior.get(Calendar.HOUR_OF_DAY),23,59);
 
-                Calendar limiteInferior = DataReferencia;
-                limiteInferior.set(limiteInferior.get(Calendar.YEAR),limiteInferior.get(Calendar.MONTH),limiteInferior.get(Calendar.DAY_OF_MONTH),limiteInferior.get(Calendar.HOUR_OF_DAY),0,0);
-
-                if(c.getData().before(limiteSuperior) && c.getData().after(limiteInferior))
+                if((DataReferencia.get(Calendar.DAY_OF_MONTH) == c.getData().get(Calendar.DAY_OF_MONTH)) && (DataReferencia.get(Calendar.MONTH) == c.getData().get(Calendar.MONTH)) && (DataReferencia.get(Calendar.DAY_OF_MONTH) == c.getData().get(Calendar.DAY_OF_MONTH)))
                 {
                     ListaDeRetorno.add(c);
                 }
